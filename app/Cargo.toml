@@ -1,0 +1,42 @@
+[package]
+name = "app"
+version = "0.1.0"
+edition = "2021"
+
+# Standalone crate, not part of the root rest_api package.
+[workspace]
+
+[dependencies]
+dioxus = { version = "0.7.10", features = ["fullstack"] }
+serde = { version = "1", features = ["derive"] }
+
+# server-only
+anyhow = { version = "1", optional = true }
+async-trait = { version = "0.1", optional = true }
+dotenvy = { version = "0.15", optional = true }
+rest_api = { path = "..", optional = true }
+rusqlite = { version = "0.32", features = ["bundled"], optional = true }
+time = { version = "0.3", optional = true }
+uuid = { version = "1", features = ["v4"], optional = true }
+
+[dev-dependencies]
+tokio = { version = "1", features = ["macros", "rt"] }
+
+[features]
+default = ["web"]
+web = ["dioxus/web", "dep:gloo-timers"]
+server = [
+    "dioxus/server",
+    "dep:anyhow",
+    "dep:async-trait",
+    "dep:dotenvy",
+    "dep:rest_api",
+    "dep:rusqlite",
+    "dep:time",
+    "dep:uuid",
+]
+
+[dependencies.gloo-timers]
+version = "0.3"
+features = ["futures"]
+optional = true

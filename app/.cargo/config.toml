@@ -1,0 +1,3 @@
+# rest_api uses sqlx query macros; build them from sqlx-data.json instead of a live Postgres.
+[env]
+SQLX_OFFLINE = "true"
